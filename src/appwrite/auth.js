@@ -34,7 +34,7 @@ export class AuthService {
       throw error;
     }
   }
-
+   
   async login({ email, password }) {
     try {
       return await this.account.createEmailPasswordSession({
