@@ -1,28 +1,41 @@
-import React, {useState, useEffect} from 'react'
-import { Container, PostCard } from '../component'
+import React, { useState, useEffect } from "react";
+import { Container, PostCard } from "../component";
 import appwriteService from "../appwrite/config";
 
-function AllPosts() {
-    const [posts, setPosts] = useState([])
-    useEffect(() => {}, [])
-    appwriteService.listPost([]).then((posts) => {
-        if (posts) {
-            setPosts(posts.documents)
+function AllPost() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await appwriteService.listPost([]);
+        if (response && response.documents) {
+          setPosts(response.documents);
+        } else {
+          setPosts([]);
         }
-    })
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        setPosts([]);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
-    <div className='w-full py-8'>
-        <Container>
-            <div className='flex flex-wrap'>
-                {posts.map((post) => (
-                    <div key={post.$id} className='p-2 w-1/4'>
-                        <PostCard {...post} />
-                    </div>
-                ))}
+    <div className="w-full py-8">
+      <Container>
+        <div className="flex flex-wrap">
+          {posts.map((post) => (
+            <div key={post.$id} className="p-2 w-1/4">
+              <PostCard {...post} />
             </div>
-            </Container>
+          ))}
+        </div>
+      </Container>
     </div>
-  )
+  );
 }
 
-export default AllPosts
+export default AllPost;

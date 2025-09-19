@@ -1,13 +1,31 @@
-export { default as Header } from "./Header/Header";
-export { default as Footer } from "./footer/Footer";
-export { default as Container } from "./container/Container";
-export { default as Logo } from "./Logo";
-export { default as Logoutbtn } from "./Header/Logoutbtn";
-export { default as Button } from "./Button";
-export { default as Select } from "./Select";
-export { default as Input } from "./Input";
-export { default as PostCard } from "./PostCard";
-export { default as Signup } from './Signup';
-export { default as Login } from './Login';
-export { default as PostForm } from "./post-form/PostForm";
-export { default as Authlayout } from './Authlayout';
+import Header from "./Header/Header";
+import Footer from "./footer/Footer";
+import Container from "./container/Container";
+import Logo from "./Logo";
+import Logoutbtn from "./Header/Logoutbtn";
+import Button from "./Button";
+import Select from "./Select";
+import PostCard from "./PostCard";
+import Input from "./Input";
+import Signup from './Signup'
+import Login from './Login'
+import PostForm from "./post-form/PostForm"
+import Authlayout from './Authlayout'
+import RTE from "./RTE";
+
+export {
+  Header,
+  Footer,
+  Container,
+  Logo,
+  Logoutbtn,
+  Button,
+  Select,
+  Input,
+  PostCard,
+  Login,
+  Signup,
+  PostForm,
+  Authlayout,
+  RTE
+};
