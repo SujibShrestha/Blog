@@ -37,7 +37,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="py-3 shadow bg-gray-100">
+    <header className="py-3 shadow bg-gray-600 text-white">
       <Container>
         <nav className="flex">
           <div className="mr-4 ">

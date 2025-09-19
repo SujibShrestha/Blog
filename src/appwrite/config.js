@@ -80,17 +80,19 @@ export class Service {
     }
   }
 
-  async listPost(queries = [Query.equal("status", "active"), Query.limit(25)]) {
-    try {
-      return await this.databases.listRows({
-        databaseId: conf.appwriteDatabaseId,
-        collectionId: conf.appwriteTableId,
-        queries,
-      });
-    } catch (error) {
-      console.log("error while listing post", error);
-    }
+
+async listPost(queries = [Query.equal("status", "active"), Query.limit(25)]) {
+  try {
+    return await this.databases.listRows({
+     databaseId: conf.appwriteDatabaseId,  // databaseId
+    tableId:  conf.appwriteTableId,     // tableId
+      queries                   // queries
+    });
+  } catch (error) {
+    console.log("Error while listing post:", error);
   }
+}
+
 
   //file Services 
 
