@@ -9,8 +9,8 @@ function AllPost() {
     const fetchPosts = async () => {
       try {
         const response = await appwriteService.listPost([]);
-        if (response && response.documents) {
-          setPosts(response.documents);
+        if (response && response.rows) {
+          setPosts(response.rows);
         } else {
           setPosts([]);
         }

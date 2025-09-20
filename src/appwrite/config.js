@@ -18,8 +18,8 @@ export class Service {
     try {
       return await this.databases.createRow({
         databaseId: conf.appwriteDatabaseId,
-        collectionId: conf.appwriteTableId,
-        documentId: slug, // use slug as ID or fallback to unique
+        tableId: conf.appwriteTableId,
+        rowId: slug, // use slug as ID or fallback to unique
         data: {
           title,
           content,
@@ -33,31 +33,33 @@ export class Service {
     }
   }
 
-  async updatePost(slug, { title, content, featuredImage, status }) {
-    try {
-      return await this.databases.updateRow({
-        databaseId: conf.appwriteDatabaseId,
-        collectionId: conf.appwriteTableId,
-        documentId: slug, // use slug as ID or fallback to unique
-        data: {
-          title,
-          content,
-          featuredImage,
-          status,
-          userId,
-        },
-      });
-    } catch (error) {
-      console.log("Error while updating post", error);
-    }
+  async updatePost(slug, { title, content, featuredImage, status}) {
+  try {
+    return await this.databases.updateRow({
+      databaseId: conf.appwriteDatabaseId,
+      tableId: conf.appwriteTableId,
+      rowId : slug, // rowId of the post
+      data: {
+        title,
+        content,
+        featuredImage,
+        status,
+       
+      },
+    });
+  } catch (error) {
+    console.error("Error while updating post:", error);
+    throw error;
   }
+}
+
 
   async deletePost(slug) {
     try {
       await this.databases.deleteRow({
         databaseId: conf.appwriteDatabaseId,
-        collectionId: conf.appwriteTableId,
-        documentId: slug, // use slug as ID or fallback to unique
+        tableId: conf.appwriteTableId,
+        rowId: slug, // use slug as ID or fallback to unique
       });
 
       return true;
@@ -71,8 +73,8 @@ export class Service {
     try {
       return await this.databases.getRow({
         databaseId: conf.appwriteDatabaseId,
-        collectionId: conf.appwriteTableId,
-        documentId: slug, // use slug as ID or fallback to unique
+        tableId: conf.appwriteTableId,
+        rowId: slug, // use slug as ID or fallback to unique
       });
     } catch (error) {
       console.log("error while getting post", error);
@@ -80,21 +82,19 @@ export class Service {
     }
   }
 
-
-async listPost(queries = [Query.equal("status", "active"), Query.limit(25)]) {
-  try {
-    return await this.databases.listRows({
-     databaseId: conf.appwriteDatabaseId,  // databaseId
-    tableId:  conf.appwriteTableId,     // tableId
-      queries                   // queries
-    });
-  } catch (error) {
-    console.log("Error while listing post:", error);
+  async listPost(queries = [Query.equal("status", "active"), Query.limit(25)]) {
+    try {
+      return await this.databases.listRows({
+        databaseId: conf.appwriteDatabaseId, // databaseId
+        tableId: conf.appwriteTableId, // tableId
+        queries, // queries
+      });
+    } catch (error) {
+      console.log("Error while listing post:", error);
+    }
   }
-}
 
-
-  //file Services 
+  //file Services
 
   async uploadFile(file) {
     try {
@@ -116,20 +116,21 @@ async listPost(queries = [Query.equal("status", "active"), Query.limit(25)]) {
         fileId,
       });
 
-      return true
+      return true;
     } catch (error) {
       console.log("error while Deleting file", error);
       return false;
     }
   }
 
-  getFilePreview(fileId){
+  getFilePreview(fileId) {
     return this.bucket.getFilePreview({
-        bucketId: conf.appwriteBucketId,
-        fileId,
-    })
+      bucketId: conf.appwriteBucketId,
+      fileId,
+      width: 300,
+      height: 200,
+    });
   }
-
 }
 
 const service = new Service();
