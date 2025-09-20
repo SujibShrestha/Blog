@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, PostForm } from '../component'
 
-function AddPost() {
+function Addpost() {
   return (
     <div className='py-8'>
         <Container>
@@ -11,4 +11,4 @@ function AddPost() {
   )
 }
 
-export default AddPost
+export default Addpost
